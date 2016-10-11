@@ -27,6 +27,8 @@ static const char g_shader[] = IJK_GLES_STRING(
     uniform   lowp  sampler2D us2_SamplerX;
     uniform   lowp  sampler2D us2_SamplerY;
     uniform   lowp  sampler2D us2_SamplerZ;
+    uniform   float u_screenWidth;
+    uniform int u_Interlaced;
 
     void main()
     {
@@ -34,13 +36,23 @@ static const char g_shader[] = IJK_GLES_STRING(
         mediump vec3 yuv_h;
         mediump vec3 yuv;
         lowp    vec3 rgb;
+        
+        float coordx = vv2_Texcoord.x;
+        if (u_Interlaced != 0)
+        {
+            float idx = floor(u_screenWidth * vv2_Texcoord.x);
+            int factor = (mod(idx, 2.0) == 0.0 ? 0 : 1);
+            
+            coordx = (factor == 0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
+        }
+        highp vec2 coord = vec2(coordx, vv2_Texcoord.y);
 
-        yuv_l.x = texture2D(us2_SamplerX, vv2_Texcoord).r;
-        yuv_h.x = texture2D(us2_SamplerX, vv2_Texcoord).a;
-        yuv_l.y = texture2D(us2_SamplerY, vv2_Texcoord).r;
-        yuv_h.y = texture2D(us2_SamplerY, vv2_Texcoord).a;
-        yuv_l.z = texture2D(us2_SamplerZ, vv2_Texcoord).r;
-        yuv_h.z = texture2D(us2_SamplerZ, vv2_Texcoord).a;
+        yuv_l.x = texture2D(us2_SamplerX, coord).r;
+        yuv_h.x = texture2D(us2_SamplerX, coord).a;
+        yuv_l.y = texture2D(us2_SamplerY, coord).r;
+        yuv_h.y = texture2D(us2_SamplerY, coord).a;
+        yuv_l.z = texture2D(us2_SamplerZ, coord).r;
+        yuv_h.z = texture2D(us2_SamplerZ, coord).a;
 
         yuv = (yuv_l * 255.0 + yuv_h * 255.0 * 256.0) / (1023.0) - vec3(16.0 / 255.0, 0.5, 0.5);
 

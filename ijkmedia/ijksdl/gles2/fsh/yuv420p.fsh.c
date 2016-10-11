@@ -27,15 +27,27 @@ static const char g_shader[] = IJK_GLES_STRING(
     uniform   lowp  sampler2D us2_SamplerX;
     uniform   lowp  sampler2D us2_SamplerY;
     uniform   lowp  sampler2D us2_SamplerZ;
+    uniform   float u_screenWidth;
+    uniform int u_Interlaced;
 
     void main()
     {
         mediump vec3 yuv;
         lowp    vec3 rgb;
-
-        yuv.x = (texture2D(us2_SamplerX, vv2_Texcoord).r - (16.0 / 255.0));
-        yuv.y = (texture2D(us2_SamplerY, vv2_Texcoord).r - 0.5);
-        yuv.z = (texture2D(us2_SamplerZ, vv2_Texcoord).r - 0.5);
+        
+        float coordx = vv2_Texcoord.x;
+        if (u_Interlaced != 0)
+        {
+            float idx = floor(u_screenWidth * vv2_Texcoord.x);
+            int factor = (mod(idx, 2.0) == 0.0 ? 0 : 1);
+            
+            coordx = (factor == 0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
+        }
+        
+        highp vec2 coord = vec2(coordx, vv2_Texcoord.y);
+        yuv.x = (texture2D(us2_SamplerX, coord).r - (16.0 / 255.0));
+        yuv.y = (texture2D(us2_SamplerY, coord).r - 0.5);
+        yuv.z = (texture2D(us2_SamplerZ, coord).r - 0.5);
         rgb = um3_ColorConversion * yuv;
         gl_FragColor = vec4(rgb, 1);
     }

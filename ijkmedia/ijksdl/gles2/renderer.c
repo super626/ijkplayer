@@ -138,6 +138,10 @@ IJK_GLES2_Renderer *IJK_GLES2_Renderer_create_base(const char *fragment_shader_s
     renderer->av4_position = glGetAttribLocation(renderer->program, "av4_Position");                IJK_GLES2_checkError_TRACE("glGetAttribLocation(av4_Position)");
     renderer->av2_texcoord = glGetAttribLocation(renderer->program, "av2_Texcoord");                IJK_GLES2_checkError_TRACE("glGetAttribLocation(av2_Texcoord)");
     renderer->um4_mvp      = glGetUniformLocation(renderer->program, "um4_ModelViewProjection");    IJK_GLES2_checkError_TRACE("glGetUniformLocation(um4_ModelViewProjection)");
+    renderer->um_screenWidth = glGetUniformLocation(renderer->program, "u_screenWidth");
+    IJK_GLES2_checkError_TRACE("glGetUniformLocation(um_screenWidth)");
+    renderer->um_Interlaced = glGetUniformLocation(renderer->program, "u_Interlaced");
+    IJK_GLES2_checkError_TRACE("glGetUniformLocation(um_Interlaced)");
 
     return renderer;
 
@@ -179,6 +183,7 @@ IJK_GLES2_Renderer *IJK_GLES2_Renderer_create(SDL_VoutOverlay *overlay)
     }
 
     renderer->format = overlay->format;
+    renderer->enableInterlaced = true;
     return renderer;
 }
 
@@ -352,6 +357,7 @@ GLboolean IJK_GLES2_Renderer_use(IJK_GLES2_Renderer *renderer)
     IJK_GLES_Matrix modelViewProj;
     IJK_GLES2_loadOrtho(&modelViewProj, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
     glUniformMatrix4fv(renderer->um4_mvp, 1, GL_FALSE, modelViewProj.m);                    IJK_GLES2_checkError_TRACE("glUniformMatrix4fv(um4_mvp)");
+    
 
     IJK_GLES2_Renderer_TexCoords_reset(renderer);
     IJK_GLES2_Renderer_TexCoords_reloadVertex(renderer);
@@ -422,6 +428,9 @@ GLboolean IJK_GLES2_Renderer_renderOverlay(IJK_GLES2_Renderer *renderer, SDL_Vou
         IJK_GLES2_Renderer_TexCoords_reloadVertex(renderer);
     }
 
+    glUniform1f(renderer->um_screenWidth, renderer->layer_width);
+    glUniform1i(renderer->um_Interlaced, renderer->enableInterlaced ? 1 : 0);
+    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);      IJK_GLES2_checkError_TRACE("glDrawArrays");
 
     return GL_TRUE;

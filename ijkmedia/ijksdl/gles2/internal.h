@@ -47,6 +47,8 @@ typedef struct IJK_GLES2_Renderer
     GLuint av4_position;
     GLuint av2_texcoord;
     GLuint um4_mvp;
+    GLuint um_screenWidth;
+    GLuint um_Interlaced;
 
     GLuint us2_sampler[IJK_GLES2_MAX_PLANE];
     GLuint um3_color_conversion;
@@ -72,6 +74,7 @@ typedef struct IJK_GLES2_Renderer
     int     frame_height;
     int     frame_sar_num;
     int     frame_sar_den;
+    bool    enableInterlaced; //交织是否开启, false default
 
     GLsizei last_buffer_width;
 } IJK_GLES2_Renderer;

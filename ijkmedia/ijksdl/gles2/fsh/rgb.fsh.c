@@ -24,10 +24,22 @@ static const char g_shader[] = IJK_GLES_STRING(
     precision highp float;
     varying   highp vec2 vv2_Texcoord;
     uniform   lowp  sampler2D us2_SamplerX;
+    uniform   float u_screenWidth;
+    uniform int u_Interlaced;
 
     void main()
     {
-        gl_FragColor = vec4(texture2D(us2_SamplerX, vv2_Texcoord).rgb, 1);
+        float coordx = vv2_Texcoord.x;
+        if (u_Interlaced != 0)
+        {
+            float idx = floor(u_screenWidth * vv2_Texcoord.x);
+            int factor = (mod(idx, 2.0) == 0.0 ? 0 : 1);
+            
+            coordx = (factor == 0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
+        }
+        
+        highp vec2 coord = vec2(coordx, vv2_Texcoord.y);
+        gl_FragColor = vec4(texture2D(us2_SamplerX, coord).rgb, 1);
     }
 );
 
