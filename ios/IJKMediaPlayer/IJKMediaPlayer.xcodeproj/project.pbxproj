@@ -201,7 +201,7 @@
 		E6903FFB17EAFC6100CFD954 /* ijksdl_vout_overlay_ffmpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ijksdl_vout_overlay_ffmpeg.c; sourceTree = "<group>"; };
 		E6903FFC17EAFC6100CFD954 /* ijksdl_vout_overlay_ffmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ijksdl_vout_overlay_ffmpeg.h; sourceTree = "<group>"; };
 		E6903FFD17EAFC6100CFD954 /* ijksdl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ijksdl.h; sourceTree = "<group>"; };
-		E6903FFF17EAFC6100CFD954 /* ijksdl_aout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ijksdl_aout.c; sourceTree = "<group>"; };
+		E6903FFF17EAFC6100CFD954 /* ijksdl_aout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ijksdl_aout.c; path = ../../ijksdl_aout.c; sourceTree = "<group>"; };
 		E690400017EAFC6100CFD954 /* ijksdl_aout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ijksdl_aout.h; sourceTree = "<group>"; };
 		E690400117EAFC6100CFD954 /* ijksdl_aout_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ijksdl_aout_internal.h; sourceTree = "<group>"; };
 		E690400217EAFC6100CFD954 /* ijksdl_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ijksdl_audio.h; sourceTree = "<group>"; };
@@ -541,7 +541,6 @@
 				E6903FEF17EAFC6100CFD954 /* ffmpeg */,
 				E6C459851C7030B6004831EC /* gles2 */,
 				E690400117EAFC6100CFD954 /* ijksdl_aout_internal.h */,
-				E6903FFF17EAFC6100CFD954 /* ijksdl_aout.c */,
 				E690400017EAFC6100CFD954 /* ijksdl_aout.h */,
 				E63FC27017F01143003551EB /* ijksdl_audio.c */,
 				E690400217EAFC6100CFD954 /* ijksdl_audio.h */,
@@ -649,6 +648,7 @@
 		E6C459901C7030B6004831EC /* vsh */ = {
 			isa = PBXGroup;
 			children = (
+				E6903FFF17EAFC6100CFD954 /* ijksdl_aout.c */,
 				E6C459911C7030B6004831EC /* mvp.vsh.c */,
 			);
 			path = vsh;

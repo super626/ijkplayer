@@ -183,7 +183,7 @@ IJK_GLES2_Renderer *IJK_GLES2_Renderer_create(SDL_VoutOverlay *overlay)
     }
 
     renderer->format = overlay->format;
-    renderer->enableInterlaced = true;
+    renderer->interlacedMode = 0;
     return renderer;
 }
 
@@ -429,7 +429,7 @@ GLboolean IJK_GLES2_Renderer_renderOverlay(IJK_GLES2_Renderer *renderer, SDL_Vou
     }
 
     glUniform1f(renderer->um_screenWidth, renderer->layer_width);
-    glUniform1i(renderer->um_Interlaced, renderer->enableInterlaced ? 1 : 0);
+    glUniform1i(renderer->um_Interlaced, renderer->interlacedMode);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);      IJK_GLES2_checkError_TRACE("glDrawArrays");
 

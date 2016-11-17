@@ -74,7 +74,7 @@ typedef struct IJK_GLES2_Renderer
     int     frame_height;
     int     frame_sar_num;
     int     frame_sar_den;
-    bool    enableInterlaced; //交织是否开启, false default
+    int     interlacedMode; //交织模式， 0 不开启(default)，1 左右交织， 2 右左交织
 
     GLsizei last_buffer_width;
 } IJK_GLES2_Renderer;
