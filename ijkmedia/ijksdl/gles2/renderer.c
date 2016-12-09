@@ -138,8 +138,7 @@ IJK_GLES2_Renderer *IJK_GLES2_Renderer_create_base(const char *fragment_shader_s
     renderer->av4_position = glGetAttribLocation(renderer->program, "av4_Position");                IJK_GLES2_checkError_TRACE("glGetAttribLocation(av4_Position)");
     renderer->av2_texcoord = glGetAttribLocation(renderer->program, "av2_Texcoord");                IJK_GLES2_checkError_TRACE("glGetAttribLocation(av2_Texcoord)");
     renderer->um4_mvp      = glGetUniformLocation(renderer->program, "um4_ModelViewProjection");    IJK_GLES2_checkError_TRACE("glGetUniformLocation(um4_ModelViewProjection)");
-    renderer->um_screenWidth = glGetUniformLocation(renderer->program, "u_screenWidth");
-    IJK_GLES2_checkError_TRACE("glGetUniformLocation(um_screenWidth)");
+
     renderer->um_Interlaced = glGetUniformLocation(renderer->program, "u_Interlaced");
     IJK_GLES2_checkError_TRACE("glGetUniformLocation(um_Interlaced)");
 
@@ -428,7 +427,6 @@ GLboolean IJK_GLES2_Renderer_renderOverlay(IJK_GLES2_Renderer *renderer, SDL_Vou
         IJK_GLES2_Renderer_TexCoords_reloadVertex(renderer);
     }
 
-    glUniform1f(renderer->um_screenWidth, renderer->layer_width);
     glUniform1i(renderer->um_Interlaced, renderer->interlacedMode);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);      IJK_GLES2_checkError_TRACE("glDrawArrays");
