@@ -152,7 +152,7 @@
                                     kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
                                     nil];
 
-    _scaleFactor = [[UIScreen mainScreen] scale];
+    _scaleFactor = [[UIScreen mainScreen] nativeScale];
     if (_scaleFactor < 0.1f)
         _scaleFactor = 1.0f;
 

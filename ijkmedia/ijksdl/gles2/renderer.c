@@ -183,7 +183,7 @@ IJK_GLES2_Renderer *IJK_GLES2_Renderer_create(SDL_VoutOverlay *overlay)
     }
 
     renderer->format = overlay->format;
-    renderer->interlacedMode = 0;
+    renderer->interlacedMode = 1;
     return renderer;
 }
 
@@ -271,7 +271,7 @@ static void IJK_GLES2_Renderer_Vertices_apply(IJK_GLES2_Renderer *renderer)
 
     nW = (width  * dd / (float)renderer->layer_width);
     nH = (height * dd / (float)renderer->layer_height);
-
+    
     renderer->vertices[0] = - nW;
     renderer->vertices[1] = - nH;
     renderer->vertices[2] =   nW;

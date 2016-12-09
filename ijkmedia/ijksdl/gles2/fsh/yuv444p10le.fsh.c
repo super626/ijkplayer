@@ -27,7 +27,6 @@ static const char g_shader[] = IJK_GLES_STRING(
     uniform   lowp  sampler2D us2_SamplerX;
     uniform   lowp  sampler2D us2_SamplerY;
     uniform   lowp  sampler2D us2_SamplerZ;
-    uniform   float u_screenWidth;
     uniform int u_Interlaced;//1 left right, 2 right left
 
     void main()
@@ -38,16 +37,15 @@ static const char g_shader[] = IJK_GLES_STRING(
         lowp    vec3 rgb;
         
         float coordx = vv2_Texcoord.x;
-        if (u_Interlaced != 0)
+        if (u_Interlaced == 1)
         {
-            float idx = floor(u_screenWidth * vv2_Texcoord.x);
-            int factor = (mod(idx, 2.0) == 0.0 ? 0 : 1);
-            
-            if (u_Interlaced == 1)
-                coordx = (factor == 0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
-            else
-                coordx = (factor == 1 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
+            coordx = (factor == 0.0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
         }
+        else
+        {
+            coordx = (factor == 1.0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
+        }
+        
         highp vec2 coord = vec2(coordx, vv2_Texcoord.y);
 
         yuv_l.x = texture2D(us2_SamplerX, coord).r;
