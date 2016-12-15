@@ -427,7 +427,7 @@ GLboolean IJK_GLES2_Renderer_renderOverlay(IJK_GLES2_Renderer *renderer, SDL_Vou
         IJK_GLES2_Renderer_TexCoords_reloadVertex(renderer);
     }
 
-    glUniform1i(renderer->um_Interlaced, renderer->interlacedMode);
+    glUniform1i(renderer->um_Interlaced, /*renderer->interlacedMode*/100);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);      IJK_GLES2_checkError_TRACE("glDrawArrays");
 

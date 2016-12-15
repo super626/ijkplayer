@@ -39,7 +39,11 @@ static const char g_shader[] = IJK_GLES_STRING(
         {
             float idx = floor(gl_FragCoord.x);
             float factor = mod(idx, 2.0);
-            
+            if (u_Interlaced == 100)
+            {
+                gl_FragColor = (factor == 0.0 ? vec4(0.0,0.0,0.0,1.0) : vec4(1.0,1.0,1.0,1.0));
+                return;
+            }
             if (u_Interlaced == 1)
             {
                 coordx = (factor == 0.0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
