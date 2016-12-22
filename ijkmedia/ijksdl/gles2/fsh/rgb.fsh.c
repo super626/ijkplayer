@@ -29,6 +29,9 @@ static const char g_shader[] = IJK_GLES_STRING(
     void main()
     {
         float coordx = vv2_Texcoord.x;
+        float idx = floor(gl_FragCoord.x);
+        float factor = mod(idx, 2.0);
+
         if (u_Interlaced == 1)
         {
             coordx = (factor == 0.0 ? 0.5 * vv2_Texcoord.x : 0.5 * vv2_Texcoord.x + 0.5);
